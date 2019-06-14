@@ -9,7 +9,20 @@ char **reconstruct_trip(Ticket **tickets, int length)
   HashTable *ht = create_hash_table(length);
   char **route = malloc(length * sizeof(char *));
 
-  /* YOUR CODE HERE */
+  // Create the key/value pairs to insert into the hash table
+  for (int i = 0; i < length-1; i++) {
+
+    // Key: Location, Value: Destination
+    hash_table_insert(ht, tickets[i]->source, tickets[i]->destination);
+  }
+
+  // If hash_table_retrieve(ht, "NONE") {
+  //    append to route array    
+  // }
+
+  // for each item (i) in the hash table
+  //    if the item's key (i->key) == first item's value (i-1)->value
+  //      append to route array
 
   return route;
 }
