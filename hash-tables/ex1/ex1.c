@@ -27,12 +27,14 @@ For Loop
 
 // Create the key/value pairs that are inserted into the hash table
 for (int i = 0; i < length - 1; i++;
+
+  // Save the index
+  hashed_index = hash_table_retrieve(ht, limit - weights[i])
+
   insert(key: weights[i], value: i)
 
-for (int i = 0; i < lenght - 1; i++);
-
   // for each item in the hash table, if there exists a key equal to the limit - weight
-  if (hash_table_retrieve(ht, (limit - i))) != -1 {
+  if (hash_table_retrieve(ht, (limit - weights[i]))) != -1 {
 
     // Store the index for the weight we are starting with into a variable
     *starting_weight = i
@@ -56,43 +58,46 @@ Answer *get_indices_of_item_weights(int *weights, int length, int limit)
 {
   HashTable *ht = create_hash_table(16);
 
-  // Create the key/value pairs that are inserted into the hash table
-  for (int i = 0; i < (length - 1); i++) {
-    hash_table_insert(ht, weights[i], i);
-  }
-
   int *starting_weight = NULL;
   int *matching_weight = NULL;
 
-  // Loop through the elements in the hash table
-  for (int i = 0; i < ht->capacity; i++) {
+  // Create the key/value pairs that are inserted into the hash table
+  for (int i = 0; i < length; i++) {
+
+    // Get the index that will be stored into the value
+    int hashed_index = hash_table_retrieve(ht, limit - weights[i]);
 
     // If there exists a key equal to the (limit - weight)
-    if (hash_table_retrieve(ht, (limit - i)) != -1) {
+    // if (hash_table_retrieve(ht, (limit - i)) != -1) {
+      if (hashed_index != -1) {
       // Store the index for the weight we start with
-      *starting_weight = i;
+      starting_weight = i;
 
       // Store the value (index) that matches
-      *matching_weight = hash_table_retrieve(ht, (limit - i));
+      matching_weight = hashed_index;
+
+      // Create an instance of the Answer struct
+      Answer *a = malloc(sizeof(Answer));
+
+      // Answer Struct implementation - put the smaller index into index_1
+      if (matching_weight < starting_weight) {
+
+        a->index_1 = matching_weight;
+        a->index_2 = starting_weight;
+
+      } else {
+
+        a->index_1 = starting_weight;
+        a->index_2 = matching_weight;
+      }
+
+      return a;
+
+    } else {
+      // If there is not a key, insert one
+      hash_table_insert(ht, weights[i], i);
     }
   }
-
-  // Create an instance of the Answer struct
-  Answer *a = malloc(sizeof(Answer));
-
-  // Answer Struct implementation - put the smaller index into index_1
-  if (matching_weight < starting_weight) {
-
-    a->index_1 = *matching_weight;
-    a->index_2 = *starting_weight;
-
-  } else {
-
-    a->index_1 = *starting_weight;
-    a->index_2 = *matching_weight;
-  }
-
-  return a;
 
 }
 
