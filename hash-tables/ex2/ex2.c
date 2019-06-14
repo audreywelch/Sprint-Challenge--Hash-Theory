@@ -4,13 +4,42 @@
 #include "hashtable.h"
 #include "ex2.h"
 
+// PLAN:
+  // If hash_table_retrieve(ht, "NONE") {
+  //    append to route array    
+  // }
+
+  // for each item (i) in the hash table
+  //    if the item's key (i->key) == first item's value (i-1)->value
+  //      append to route array
+
 char **reconstruct_trip(Ticket **tickets, int length)
 {
   HashTable *ht = create_hash_table(length);
   char **route = malloc(length * sizeof(char *));
 
-  /* YOUR CODE HERE */
+  // Create the key/value pairs to insert into the hash table
+  for (int i = 0; i < length; i++) {
 
+    // Insert Tickets to the hash table
+    // Key: Location, Value: Destination
+    hash_table_insert(ht, tickets[i]->source, tickets[i]->destination);
+  }
+
+  // First item to be inserted in the array should have a source/key of NONE
+  char *current_destination = hash_table_retrieve(ht, "NONE");
+
+  // for each item (i) in the hash table
+  for (int i = 0; i < length; i++) {
+
+    // Set each index of the route array to the 
+    route[i] = current_destination;
+
+    // Retrieve the ticket that has its source/key that matches the current ticket's destination
+    // This returns the value/destination of that ticket
+    current_destination = hash_table_retrieve(ht, current_destination);
+  }
+  
   return route;
 }
 
