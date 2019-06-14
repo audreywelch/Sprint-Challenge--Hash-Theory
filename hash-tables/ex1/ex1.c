@@ -3,6 +3,55 @@
 #include "hashtable.h"
 #include "ex1.h"
 
+
+/*
+THOUGHTS:
+
+- Create a hash table
+- Insert key, value pairs into the hash table
+  > key: weight
+  > value: index (because this is what we want to enter into the Answer struct)
+  
+- (limit - weight) = the key we want to look for
+  > retrieve()
+
+For Loop
+  int *weights = { 4: 0, 6: 1, 10: 2, 15: 3, 16: 4 }
+  21 - 4 = 17
+  Looks for key 17
+  Doesn't find it
+
+  21 - 6 = 15
+  Looks for key 15
+  value: 3
+
+// Create the key/value pairs that are inserted into the hash table
+for (int i = 0; i < length - 1; i++;
+  insert(key: weights[i], value: i)
+
+for (int i = 0; i < lenght - 1; i++);
+
+  // for each item in the hash table, if there exists a key equal to the limit - weight
+  if (hash_table_retrieve(ht, (limit - i))) != -1 {
+
+    // Store the index for the weight we are starting with into a variable
+    *starting_weight = i
+
+    // Store that value (index) into a variable
+    *matching_weight = hash_table_retrieve(ht, (limit - i))
+  }
+
+  // Answer Struct implementation
+  if (matching_weight < starting weight) {
+    Answer->index_1 = matching_weight
+    Answer->index_2 = starting_weight
+  } else {
+    Answer->index_1 = starting_weight
+    Answer->index_2 = matching_weight
+  }
+  
+*/
+
 Answer *get_indices_of_item_weights(int *weights, int length, int limit)
 {
   HashTable *ht = create_hash_table(16);
